@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System;
+﻿using System;
 
 const string x = "X";
 const string o = "O";
@@ -7,17 +6,17 @@ const string blank = " ";
 
 string[] gameBoard = new string[] {blank, blank, blank, blank, blank, blank, blank, blank, blank};
 
-void playGame(){
+void Main(){
 
-    while (gameDone(gameBoard) == false) {
+    while (GameDone(gameBoard) == false) {
         // Display game board.
-        displayBoard(gameBoard);
+        DisplayBoard(gameBoard);
 
         // Figure out whose turn it is and assing that value to player.
-        bool turn = isXTurn(gameBoard);
+        bool turn = IsXTurn(gameBoard);
         string player = "";
 
-        if (isXTurn(gameBoard) == true) {
+        if (IsXTurn(gameBoard) == true) {
             player = x;
         } else {
             player = o;
@@ -47,7 +46,7 @@ void playGame(){
 }
 
 
-bool gameDone(string[] board) {
+bool GameDone(string[] board) {
     // Check columns.
     for (int i=0; i<3; i++) {
         string space1 = board[0 + i];
@@ -55,7 +54,7 @@ bool gameDone(string[] board) {
         string space3 = board[6 + i];
 
         if(space1 != blank && space2 != blank && space3 != blank && space1 == space2 && space2 == space3) {
-            displayBoard(board);
+            DisplayBoard(board);
             Console.WriteLine("The game was won by " + board[0 + i]);
             return true;
         }
@@ -68,7 +67,7 @@ bool gameDone(string[] board) {
         string space3 = board[2 + i];
 
         if(space1 != blank && space2 != blank && space3 != blank && space1 == space2 && space2 == space3) {
-            displayBoard(board);
+            DisplayBoard(board);
             Console.WriteLine("The game was won by " + board[0 + i]);
             return true;
         }
@@ -81,8 +80,27 @@ bool gameDone(string[] board) {
         string space3 = board[8 - i];
 
         if(space1 != blank && space2 != blank && space3 != blank && space1 == space2 && space2 == space3) {
-            displayBoard(board);
+            DisplayBoard(board);
             Console.WriteLine("The game was won by " + board[0 + i]);
+            return true;
+        }
+    }
+
+    // Check for tie.
+    int filledSpaces = 0;
+
+    for (int i=0; i<9; i++) {
+
+        if(board[i] != " ") {
+            filledSpaces++;
+        }
+
+        Console.WriteLine(filledSpaces);
+
+        if(filledSpaces == 9) {
+            Console.WriteLine("Equals 9 statement entered.");
+            DisplayBoard(board);
+            Console.WriteLine("It's a tie.");
             return true;
         }
     }
@@ -92,7 +110,7 @@ bool gameDone(string[] board) {
 }
 
 
-void displayBoard(string[] board) {
+void DisplayBoard(string[] board) {
     Console.WriteLine($"\n {board[0]} | {board[1]} | {board[2]} ");
     Console.WriteLine("---+---+---");
     Console.WriteLine($" {board[3]} | {board[4]} | {board[5]} ");
@@ -100,7 +118,7 @@ void displayBoard(string[] board) {
     Console.WriteLine($" {board[6]} | {board[7]} | {board[8]}\n");
 }
 
-bool isXTurn(string[] board) {
+bool IsXTurn(string[] board) {
 
     int emptySpaces = 0;
 
@@ -126,4 +144,4 @@ Console.WriteLine(" 4 | 5 | 6 ");
 Console.WriteLine("---+---+---");
 Console.WriteLine(" 7 | 8 | 9 \n");
 Console.WriteLine("The current board is:");
-playGame();
+Main();
